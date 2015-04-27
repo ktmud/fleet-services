@@ -9,9 +9,9 @@ Requires=etcd.service
 TimeoutStartSec=0
 ExecStartPre=-/usr/bin/docker kill dou-nginx
 ExecStartPre=-/usr/bin/docker rm dou-nginx
-ExecStartPre=-/usr/bin/mkdir /data/etc
-ExecStartPre=-/usr/bin/touch /data/etc/nginx.conf
+ExecStartPre=-/usr/bin/mkdir -p /data/etc/nginx
+ExecStartPre=-/usr/bin/touch /data/etc/nginx/nginx.conf
 ExecStartPre=/usr/bin/docker pull nginx
 ExecStart=/usr/bin/docker run --name dou-nginx -d\
-  -v /data/etc/nginx:/etc/nginx:ro\
+  -v /data/etc/nginx/nginx.conf:/etc/nginx/nginx.conf:ro\
   nginx
