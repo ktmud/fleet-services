@@ -1,0 +1,14 @@
+[Unit]
+Description=private docker registry for dou
+After=docker.service
+Requires=docker.service
+After=etcd.service
+Requires=etcd.service
+
+[Service]
+TimeoutStartSec=0
+ExecStartPre=-/usr/bin/docker kill dou-registry
+ExecStartPre=-/usr/bin/docker rm dou-registry
+ExecStartPre=/usr/bin/docker pull registry
+ExecStart=/usr/bin/docker run --name dou-registry -d registry\
+  -p 5000:5000

@@ -1,0 +1,15 @@
+[Unit]
+Description=dou-nginx servive
+After=docker.service
+Requires=docker.service
+After=etcd.service
+Requires=etcd.service
+
+[Service]
+TimeoutStartSec=0
+ExecStartPre=-/usr/bin/docker kill dou-nginx
+ExecStartPre=-/usr/bin/docker rm dou-nginx
+ExecStartPre=/usr/bin/docker pull nginx
+ExecStart=/usr/bin/docker run --name dou-nginx -d\
+  -v /data/etc/nginx.conf:/etc/nginx/nginx.conf\
+  nginx

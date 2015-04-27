@@ -1,0 +1,15 @@
+[Unit]
+Description=redis servive for dou App
+After=docker.service
+Requires=docker.service
+After=etcd.service
+Requires=etcd.service
+
+[Service]
+TimeoutStartSec=0
+ExecStartPre=-/usr/bin/docker kill dou-redis
+ExecStartPre=-/usr/bin/docker rm dou-redis
+ExecStartPre=/usr/bin/docker pull redis
+ExecStart=/usr/bin/docker run --name dou-redis -d\
+  -v /data/redis:/data
+  redis redis-server --appendonly yes
