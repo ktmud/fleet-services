@@ -9,6 +9,7 @@ Requires=etcd.service
 TimeoutStartSec=0
 ExecStartPre=-/usr/bin/docker kill dou-redis
 ExecStartPre=-/usr/bin/docker rm dou-redis
+ExecStartPre=-/bin/mkdir /data/redis
 ExecStartPre=/usr/bin/docker pull redis
 ExecStart=/usr/bin/docker run --name dou-redis -d\
   -v /data/redis:/data
